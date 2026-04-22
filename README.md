@@ -1,3 +1,4 @@
+HEAD
 
 # Habit Hero — Gamified Habit Tracker
 
@@ -45,3 +46,4 @@ npm run dev
 - MongoDB + Mongoose
 - Passport (local), Sessions
 - Flash messages
+ 6016ed011725e10cd4ecbf335a0981581da15a2a
