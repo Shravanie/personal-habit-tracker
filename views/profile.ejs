@@ -1,0 +1,63 @@
+<div class="max-w-3xl mx-auto p-6">
+
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">👤 Profile</h1>
+    <p class="text-gray-500 mt-1">Your account details and achievements</p>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="bg-white rounded-2xl shadow p-6 space-y-4">
+
+    <div>
+      <p class="text-gray-500 text-sm">Username</p>
+      <p class="text-lg font-semibold text-gray-800"><%= me.username %></p>
+    </div>
+
+    <div>
+      <p class="text-gray-500 text-sm">Email</p>
+      <p class="text-lg text-gray-800"><%= me.email %></p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mt-4">
+
+      <div class="bg-indigo-50 p-4 rounded-xl text-center">
+        <p class="text-sm text-gray-500">XP</p>
+        <p class="text-2xl font-bold text-indigo-600"><%= me.xp || 0 %></p>
+      </div>
+
+      <div class="bg-orange-50 p-4 rounded-xl text-center">
+        <p class="text-sm text-gray-500">Current Streak</p>
+        <p class="text-2xl font-bold text-orange-500">
+          🔥 <%= (me.streak && me.streak.current) || 0 %> days
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Badges -->
+  <div class="mt-8">
+    <h2 class="text-xl font-semibold text-gray-800 mb-3">🏅 Badges</h2>
+
+    <div class="flex flex-wrap gap-3">
+
+      <% if (me.badges && me.badges.length > 0) { %>
+
+        <% me.badges.forEach(badge => { %>
+          <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+            <%= badge %>
+          </span>
+        <% }) %>
+
+      <% } else { %>
+
+        <p class="text-gray-500">No badges earned yet.</p>
+
+      <% } %>
+
+    </div>
+  </div>
+
+</div>

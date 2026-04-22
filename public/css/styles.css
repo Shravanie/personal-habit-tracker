@@ -1,0 +1,11 @@
+
+body { background: #0f172a; color: #e2e8f0; }
+a { text-decoration: none; }
+.card { background: #111827; border: 1px solid #1f2937; }
+.badge { background: #1f2937; border: 1px solid #334155; padding: 4px 10px; border-radius: 999px; margin: 2px; display: inline-block; }
+.btn-main { background: #2563eb; color: white; border: none; }
+.btn-main:hover { filter: brightness(1.1); }
+input, textarea { background: #0b1220 !important; color: #e2e8f0 !important; border: 1px solid #1f2937 !important; }
+.navbar { background: #0b1220 !important; border-bottom: 1px solid #1f2937; }
+.table { color: #e2e8f0; }
+.list-group-item { border: 1px solid #1f2937; }

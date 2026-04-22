@@ -1,0 +1,139 @@
+<div class="max-w-7xl mx-auto w-full">
+
+  <!-- ✅ Greeting -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">
+      Welcome, <%= me.name %> 👋
+    </h1>
+    <p class="text-gray-600 mt-2">
+      Track your habits, earn XP, and climb the leaderboard!
+    </p>
+  </div>
+
+  <!-- ✅ Stats -->
+  <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-10">
+    <div class="bg-white rounded-2xl shadow p-6 text-center">
+      <p class="text-4xl font-bold text-indigo-600"><%= me.xp || 0 %></p>
+      <p class="text-gray-600 mt-2">XP</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6 text-center">
+      <p class="text-4xl font-bold text-green-600"><%= habits.length %></p>
+      <p class="text-gray-600 mt-2">Active Habits</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6 text-center">
+      <p class="text-4xl font-bold text-yellow-600"><%= doneIds.size %></p>
+      <p class="text-gray-600 mt-2">Completed Today</p>
+    </div>
+  </div>
+
+  <!-- ✅ Chart -->
+  <div class="bg-white rounded-2xl shadow p-6 mb-10">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Weekly Progress</h2>
+    <canvas id="progressChart" style="height: 300px;"></canvas>
+  </div>
+
+  <!-- ✅ Actions -->
+  <div class="flex gap-4 mb-10">
+    <a href="/habits/new"
+       class="px-5 py-3 rounded-xl bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition">
+      + Add Habit
+    </a>
+
+    <a href="/leaderboard"
+       class="px-5 py-3 rounded-xl bg-gray-200 text-gray-800 font-medium hover:bg-gray-300 transition">
+      View Leaderboard
+    </a>
+  </div>
+
+  <!-- ✅ Habits -->
+  <div>
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Your Habits</h2>
+
+    <% if (habits.length === 0) { %>
+      <p class="text-gray-500">
+        No habits yet.
+        <a href="/habits/new" class="text-indigo-600 hover:underline">
+          Add one now
+        </a>.
+      </p>
+    <% } else { %>
+
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+        <% habits.forEach(habit => { %>
+
+          <div class="bg-white rounded-xl shadow p-5 flex flex-col justify-between">
+
+            <!-- Habit Info -->
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">
+                <%= habit.name %>
+              </h3>
+
+              <p class="text-gray-500 text-sm mt-1">
+                <%= habit.description || "No description" %>
+              </p>
+
+              <!-- Streak -->
+              <p class="mt-3 text-sm font-medium text-orange-500">
+                🔥 Streak: <%= habit.streak || 0 %> days
+              </p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-4 flex gap-2">
+
+              <!-- Complete -->
+              <form action="/habits/<%= habit._id %>/complete" method="POST" class="w-full">
+                <button type="submit"
+                        class="w-full px-3 py-2 rounded-lg bg-green-500 text-white text-sm font-medium shadow hover:bg-green-600 transition">
+                  Complete
+                </button>
+              </form>
+
+              <!-- Fail -->
+              <form action="/habits/<%= habit._id %>/fail" method="POST" class="w-full">
+                <button type="submit"
+                        class="w-full px-3 py-2 rounded-lg bg-red-500 text-white text-sm font-medium shadow hover:bg-red-600 transition">
+                  Fail
+                </button>
+              </form>
+
+            </div>
+
+          </div>
+
+        <% }) %>
+
+      </div>
+
+    <% } %>
+  </div>
+
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById("progressChart").getContext("2d");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: <%- JSON.stringify(last7Days) %>,
+      datasets: [{
+        label: "Habits Completed",
+        data: <%- JSON.stringify(completionCounts) %>
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+</script>

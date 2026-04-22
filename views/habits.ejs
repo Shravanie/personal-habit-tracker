@@ -1,0 +1,74 @@
+<div class="max-w-4xl mx-auto p-6">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Your Habits</h1>
+
+    <a href="/habits/new" 
+       class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 transition">
+      + Add Habit
+    </a>
+  </div>
+
+  <% if (habits.length === 0) { %>
+
+    <!-- Empty State -->
+    <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center shadow-sm">
+      <p class="text-gray-600 mb-2">You haven’t added any habits yet.</p>
+
+      <a href="/habits/new" 
+         class="text-indigo-600 font-medium hover:underline">
+        Create your first habit →
+      </a>
+    </div>
+
+  <% } else { %>
+
+    <!-- Habit Grid -->
+    <div class="grid gap-4 sm:grid-cols-2">
+
+      <% habits.forEach(habit => { %>
+
+        <div class="bg-white rounded-xl shadow p-5 flex flex-col justify-between">
+
+          <!-- Habit Info -->
+          <div>
+            <h2 class="text-xl font-semibold text-gray-800">
+              <%= habit.name %>
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-1">
+              <%= habit.description || "No description" %>
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center justify-between mt-4">
+
+            <!-- Complete -->
+            <form action="/habits/<%= habit._id %>/complete" method="POST">
+              <button type="submit" 
+                class="px-3 py-1.5 rounded-lg bg-green-500 text-white text-sm font-medium shadow hover:bg-green-600 transition">
+                Mark Complete
+              </button>
+            </form>
+
+            <!-- Archive -->
+            <form action="/habits/<%= habit._id %>/archive" method="POST">
+              <button type="submit" 
+                class="px-3 py-1.5 rounded-lg bg-gray-300 text-gray-800 text-sm font-medium hover:bg-gray-400 transition">
+                Archive
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+
+      <% }) %>
+
+    </div>
+
+  <% } %>
+
+</div>
